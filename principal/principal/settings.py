@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'Mascotas',
     'duenos',
+    'citas',
     'corsheaders',
 ]
 
