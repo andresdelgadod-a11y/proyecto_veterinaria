@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Veterinaria</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Veterinaria</h1>
+
+  <h2>Mascotas</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th><th>Edad</th><th>Dueño (id)</th></tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+
+  <h3>Nueva mascota</h3>
+  <form id="formulario">
+    <input name="nombre" placeholder="Nombre" required>
+    <input name="especie" placeholder="Especie" required>
+    <input name="raza" placeholder="Raza">
+    <input name="edad" type="number" min="0" placeholder="Edad" required>
+    <input name="dueno" type="number" placeholder="ID del dueño" required>
+    <button type="submit">Guardar</button>
+  </form>
+
+  <script src="app.js"></script>
+</body>
+</html>
