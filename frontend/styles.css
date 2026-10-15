@@ -1,5 +1,350 @@
-body { font-family: sans-serif; margin: 2rem; }
-table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; }
-th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-th { background: #f0f0f0; }
-form input { margin: 0 4px 4px 0; padding: 6px; }
+/* ---------- Variables de diseño ---------- */
+:root {
+  --primario: #0e6b6b;
+  --primario-oscuro: #0a5252;
+  --primario-suave: #e7f3f3;
+  --fondo: #eceff1;
+  --papel: #ffffff;
+  --texto: #1d252b;
+  --texto-suave: #5d6e79;
+  --linea: #2b3640;
+  --borde: #d6dce0;
+  --encabezado-tabla: #f0f3f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: 'Inter', Arial, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+.contenedor {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* ---------- Hoja de registro (formato) ---------- */
+.hoja {
+  position: relative;
+  overflow: hidden;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 2rem 2.5rem 2.25rem;
+  box-shadow: 0 2px 4px rgba(16, 32, 44, 0.06), 0 10px 28px rgba(16, 32, 44, 0.08);
+}
+
+/* Marca de agua estilo huella en la esquina */
+.hoja::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  width: 340px;
+  height: 340px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230e6b6b'%3E%3Cellipse cx='6.5' cy='10' rx='2.2' ry='2.8'/%3E%3Cellipse cx='17.5' cy='10' rx='2.2' ry='2.8'/%3E%3Cellipse cx='10' cy='5.8' rx='2' ry='2.6'/%3E%3Cellipse cx='14' cy='5.8' rx='2' ry='2.6'/%3E%3Cpath d='M12 11c-3.3 0-6 2.7-6 5.4 0 1.8 1.4 2.8 3 2.8 1.2 0 2-.5 3-.5s1.8.5 3 .5c1.6 0 3-1 3-2.8 0-2.7-2.7-5.4-6-5.4z'/%3E%3C/svg%3E") no-repeat center / contain;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.hoja > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hoja__encabezado {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  color: var(--primario);
+  background: var(--primario-suave);
+}
+
+.hoja__titulos {
+  flex: 1;
+  text-align: center;
+}
+
+.entidad {
+  margin: 0 0 0.35rem;
+  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  font-size: 0.95rem;
+  color: var(--texto-suave);
+}
+
+.hoja h1 {
+  display: inline-block;
+  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+
+/* ---------- Campos tipo formato (etiqueta + línea) ---------- */
+.fila {
+  display: flex;
+  gap: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.campo {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.campo--corto {
+  flex: 0 0 210px;
+}
+
+label,
+.etiqueta {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  padding-bottom: 0.35rem;
+}
+
+.campo input:not([type='radio']) {
+  flex: 1;
+  min-width: 0;
+  padding: 0.3rem 0.25rem;
+  border: 0;
+  border-bottom: 1.5px solid var(--linea);
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--texto);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.campo input:not([type='radio']):hover {
+  background: #f6f9fa;
+}
+
+.campo input:not([type='radio']):focus-visible {
+  outline: none;
+  border-bottom-color: var(--primario);
+  background: var(--primario-suave);
+}
+
+/* Casillas cuadradas estilo formato en papel */
+.campo--opciones {
+  align-items: center;
+}
+
+.campo--opciones .etiqueta {
+  padding-bottom: 0;
+}
+
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+}
+
+.opcion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 1.5px solid var(--linea);
+  border-radius: 2px;
+  background: #fff;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+input[type='radio']::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--primario);
+  transform: scale(0);
+  transition: transform 0.1s;
+}
+
+input[type='radio']:checked::before {
+  transform: scale(1);
+}
+
+input[type='radio']:focus-visible {
+  outline: 3px solid rgba(14, 107, 107, 0.35);
+  outline-offset: 2px;
+}
+
+.nota {
+  margin: 1.75rem 0 1.5rem;
+  max-width: 62ch;
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+}
+
+.boton {
+  padding: 0.7rem 1.75rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--primario);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.boton:hover {
+  background: var(--primario-oscuro);
+}
+
+.boton:focus-visible {
+  outline: 3px solid rgba(14, 107, 107, 0.35);
+  outline-offset: 2px;
+}
+
+/* ---------- Tabla ---------- */
+.panel {
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(16, 32, 44, 0.06);
+}
+
+.panel h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.tabla-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 540px;
+}
+
+th, td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+}
+
+thead th {
+  background: var(--encabezado-tabla);
+  color: var(--texto-suave);
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-bottom: 1px solid var(--borde);
+  white-space: nowrap;
+}
+
+tbody tr + tr td {
+  border-top: 1px solid var(--borde);
+}
+
+tbody tr:hover {
+  background: #f8fafb;
+}
+
+tbody td {
+  font-size: 0.92rem;
+}
+
+tbody td:nth-child(1) {
+  color: var(--texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+tbody td:nth-child(2) {
+  font-weight: 600;
+}
+
+.vacio {
+  margin: 1rem 0 0;
+  padding: 0.9rem 1rem;
+  border-radius: 6px;
+  background: var(--primario-suave);
+  color: var(--primario-oscuro);
+  font-size: 0.92rem;
+}
+
+/* ---------- Adaptabilidad Móvil ---------- */
+@media (max-width: 680px) {
+  .hoja {
+    padding: 1.5rem 1.25rem 1.75rem;
+  }
+  .hoja__encabezado {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .fila {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .campo--corto {
+    flex: 1;
+  }
+  .campo--opciones {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .boton {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

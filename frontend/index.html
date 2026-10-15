@@ -2,29 +2,99 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Veterinaria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veterinaria - Registro de Mascotas</title>
+  <!-- Fuentes Google para la tipografía de documento/formato -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Veterinaria</h1>
 
-  <h2>Mascotas</h2>
-  <table>
-    <thead>
-      <tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th><th>Edad</th><th>Dueño (id)</th></tr>
-    </thead>
-    <tbody id="tabla"></tbody>
-  </table>
+  <main class="contenedor">
+    <!-- Formulario con estilo Hoja de Registro en Papel -->
+    <section class="hoja">
+      <header class="hoja__encabezado">
+        <div class="logo">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="currentColor">
+            <ellipse cx="6.5" cy="10" rx="2.2" ry="2.8"/>
+            <ellipse cx="17.5" cy="10" rx="2.2" ry="2.8"/>
+            <ellipse cx="10" cy="5.8" rx="2" ry="2.6"/>
+            <ellipse cx="14" cy="5.8" rx="2" ry="2.6"/>
+            <path d="M12 11c-3.3 0-6 2.7-6 5.4 0 1.8 1.4 2.8 3 2.8 1.2 0 2-.5 3-.5s1.8.5 3 .5c1.6 0 3-1 3-2.8 0-2.7-2.7-5.4-6-5.4z"/>
+          </svg>
+        </div>
+        <div class="hoja__titulos">
+          <p class="entidad">CENTRO VETERINARIO Y CLINICO</p>
+          <h1>REGISTRO DE MASCOTAS</h1>
+        </div>
+      </header>
 
-  <h3>Nueva mascota</h3>
-  <form id="formulario">
-    <input name="nombre" placeholder="Nombre" required>
-    <input name="especie" placeholder="Especie" required>
-    <input name="raza" placeholder="Raza">
-    <input name="edad" type="number" min="0" placeholder="Edad" required>
-    <input name="dueno" type="number" placeholder="ID del dueño" required>
-    <button type="submit">Guardar</button>
-  </form>
+      <form id="formulario">
+        <!-- Fila 1: Nombre de la Mascota y ID del Dueño -->
+        <div class="fila">
+          <div class="campo">
+            <label for="nombre">NOMBRE DE LA MASCOTA:</label>
+            <input id="nombre" name="nombre" placeholder="Ej. Firulais" required>
+          </div>
+          <div class="campo campo--corto">
+            <label for="dueno">DUEÑO (ID):</label>
+            <input id="dueno" name="dueno" type="number" placeholder="Ej. 101" required>
+          </div>
+        </div>
+
+        <!-- Fila 2: Especie -->
+        <div class="fila">
+          <div class="campo">
+            <label for="especie">ESPECIE:</label>
+            <input id="especie" name="especie" placeholder="Ej. Perro, Gato, Ave..." required>
+          </div>
+        </div>
+
+        <!-- Fila 3: Raza y Edad -->
+        <div class="fila">
+          <div class="campo">
+            <label for="raza">RAZA:</label>
+            <input id="raza" name="raza" placeholder="Ej. Criollo / Labrador">
+          </div>
+          <div class="campo campo--corto">
+            <label for="edad">EDAD:</label>
+            <input id="edad" name="edad" type="number" min="0" placeholder="Ej. 3" required>
+          </div>
+        </div>
+
+        <p class="nota">
+          NOTA: Debe diligenciar este formato para el registro y control del paciente veterinario.
+        </p>
+
+        <div style="margin-top: 1.5rem; text-align: right;">
+          <button type="submit" class="boton">Guardar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Tabla de Mascotas -->
+    <section class="panel">
+      <h2>Mascotas</h2>
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Especie</th>
+              <th>Raza</th>
+              <th>Edad</th>
+              <th>Dueño (id)</th>
+            </tr>
+          </thead>
+          <tbody id="tabla"></tbody>
+        </table>
+      </div>
+      <p class="vacio">No hay mascotas registradas actualmente.</p>
+    </section>
+  </main>
 
   <script src="app.js"></script>
 </body>
